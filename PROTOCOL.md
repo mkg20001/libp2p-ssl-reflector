@@ -4,7 +4,8 @@
 
 The reflectors address is an IPNS path without the `/ipns/` prefix
 
-Resolved object must contain either "./reflector.json" or "./reflector/metadata.json"
+Resolved object must contain **either** `./reflector.json` or `./reflector/metadata.json`.
+If both exist an error is thrown.
 
 ## Metadata contents
 

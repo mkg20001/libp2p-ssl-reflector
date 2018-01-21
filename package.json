@@ -16,6 +16,8 @@
   "author": "Maciej Krüger <mkg20001@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.6.0",
+    "debug": "^3.1.0",
     "joi": "^13.1.1",
     "named": "github:mkg20001/node-named",
     "upath": "^1.0.2"
