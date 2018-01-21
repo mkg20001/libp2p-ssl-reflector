@@ -1,6 +1,6 @@
 'use strict'
 
-const {map} = require('async')
+// const {map} = require('async')
 const debug = require('debug')
 const log = debug('libp2p:ssl-reflector')
 
@@ -8,6 +8,28 @@ const EE = require('events').EventEmitter
 const upath = require('upath')
 
 const ConfigValidator = require('./validate-config')
+
+const Peer = require('peer-info')
+const Id = require('peer-id')
+
+function resolveDNS (ma, dnsconf) {
+  const type = ma.split('/')[1]
+  const addr = ma.split('/')[2]
+  const pattern = dnsconf.pattern[type]
+  let ip = addr
+  if (!pattern) return false
+  for (const key in dnsconf.replace) {
+    ip = ip.replace(new RegExp(key, 'g'), dnsconf.replace[key]) // TODO: redos fix
+  }
+  let dns = pattern.replace('${ADDRESS}', ip)
+  return '/dns' + type.split('').pop() + '/' + dns
+}
+
+function buildPeerInfo (obj) {
+  const peer = new Peer(Id.createFromB58String(obj.id))
+  obj.addr.forEach(addr => peer.multiaddrs.add(addr))
+  return peer
+}
 
 class BasicReflector extends EE {
   constructor (opt) {
@@ -26,14 +48,15 @@ class BasicReflector extends EE {
 class IPNSReflector extends BasicReflector {
   constructor (opt) {
     super(opt)
+    this.log = debug('libp2p:ssl-reflector:ipns:' + this.config.domain)
   }
   start () {
 
   }
   enable (cb) {
-    const log = debug('libp2p:ssl-reflector:ipns:' + this.config.domain)
+    const {ipfs, log} = this
+
     log('resolve %s', this.config.domain)
-    const {ipfs} = this
 
     function tryPath (path, cb) {
       log('trying: %s', path)
@@ -76,7 +99,7 @@ module.exports = class SSLReflector extends EE {
     this.config = config
     this.swarm = swarm
     this.ipfs = ipfs
-    log('setting up reflector. config.length=%s, swarm=%s, ipfs=%s', config.length, Boolean(swarm), Boolean(ipfs))
+    log('setting up reflectors. config.length=%s, swarm=%s, ipfs=%s', config.length, Boolean(swarm), Boolean(ipfs))
   }
   _createReflector (Reflector, config) {
     const {ipfs, swarm} = this
