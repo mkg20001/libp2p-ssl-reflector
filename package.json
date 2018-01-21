@@ -1,0 +1,23 @@
+{
+  "name": "libp2p-ssl-reflector",
+  "version": "0.0.0",
+  "description": "SSL Certificates & DNS for Libp2p Nodes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "libp2p",
+    "ssl",
+    "reflector",
+    "ipns",
+    "discovery"
+  ],
+  "author": "Maciej Krüger <mkg20001@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "joi": "^13.1.1",
+    "named": "github:mkg20001/node-named",
+    "upath": "^1.0.2"
+  }
+}
