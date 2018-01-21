@@ -14,7 +14,7 @@ function decodeAddr(addr) {
       return [['A', ip]]
       break;
     case 'v6':
-      ip = addr.substr(2).replace(/-/, ':')
+      ip = addr.substr(2).replace(/-/g, ':')
       if (!ip.match(ip6re)) return []
       return [['AAAA', ip]]
       break;
