@@ -4,7 +4,9 @@
   "description": "SSL Certificates & DNS for Libp2p Nodes",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "keywords": [
     "libp2p",
@@ -21,7 +23,8 @@
     "joi": "^13.1.1",
     "named": "github:mkg20001/node-named",
     "peer-info": "^0.11.4",
-    "upath": "^1.0.2"
+    "upath": "^1.0.2",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {},
   "repository": {
@@ -31,5 +34,6 @@
   "bugs": {
     "url": "https://github.com/mkg20001/libp2p-ssl-reflector/issues"
   },
-  "homepage": "https://github.com/mkg20001/libp2p-ssl-reflector#readme"
+  "homepage": "https://github.com/mkg20001/libp2p-ssl-reflector#readme",
+  "snyk": true
 }
